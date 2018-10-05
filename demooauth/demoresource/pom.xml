@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.luciano.oauth</groupId>
-	<artifactId>demooauth</artifactId>
+	<artifactId>demoresource</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>demooauth</name>
+	<name>demoresource</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
