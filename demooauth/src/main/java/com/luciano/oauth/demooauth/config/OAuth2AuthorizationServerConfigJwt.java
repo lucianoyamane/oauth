@@ -48,9 +48,9 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
                 .and()
                 .withClient("password_code_client")
                 .secret(encoder.encode("password_code_secret"))
-                .authorizedGrantTypes("password", "refresh_token")
+                .authorizedGrantTypes("password")
                 .accessTokenValiditySeconds(30000)
-                .scopes("all")
+                .scopes("write")
                 .resourceIds("resources");
 
     }
