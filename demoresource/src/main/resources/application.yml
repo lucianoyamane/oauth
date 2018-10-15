@@ -1,2 +1,8 @@
 server:
-  port: 8455
+  port: 8501
+
+security:
+  oauth2:
+    resource:
+      userInfoUri: http://localhost:8500/user
+      id: demoresource
