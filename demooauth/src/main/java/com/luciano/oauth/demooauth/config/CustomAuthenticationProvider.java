@@ -8,6 +8,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -16,14 +18,18 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {
 
-        String name = authentication.getName();
-        String password = authentication.getCredentials().toString();
-        if (password.equals("admin2")) {
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = null;
+
+        Map<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getDetails();
+        String authorization = String.valueOf(properties.get("Authorization"));
+        if (authorization.contains("invalido")) {
             throw new
-                    BadCredentialsException("Senha incorreta!!!");
+                    BadCredentialsException("Acesso negado!!!");
+        } else if (authorization.contains("valido")) {
+            usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                    "admin", "admin", new ArrayList<>());
         }
-        return new UsernamePasswordAuthenticationToken(
-                name, password, new ArrayList<>());
+        return usernamePasswordAuthenticationToken;
     }
 
     @Override
