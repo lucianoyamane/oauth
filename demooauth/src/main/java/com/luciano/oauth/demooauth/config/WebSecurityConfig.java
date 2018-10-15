@@ -17,12 +17,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+
+    @Autowired
+    private CustomAuthenticationProvider authProvider;
+
     @Autowired
     public void globalUserDetails(final AuthenticationManagerBuilder auth) throws Exception {
 
         auth.inMemoryAuthentication()
                 .withUser("admin").password(passwordEncoder.encode("admin")).roles("ADMIN").and()
-                .withUser("teste").password(passwordEncoder.encode("teste")).roles("ADMIN");
+                .withUser("user").password(passwordEncoder.encode("user")).roles("USER");
     }
 
     @Override
@@ -38,19 +42,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable();
     }
 
-    @Autowired
-    private CustomAuthenticationProvider authProvider;
 
     @Override
     protected void configure(
-            AuthenticationManagerBuilder auth) throws Exception {
+            AuthenticationManagerBuilder auth) {
 
         auth.authenticationProvider(authProvider);
     }
-
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers("/oauth/token");
-//    }
 
 }
