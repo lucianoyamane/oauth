@@ -29,7 +29,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                     "admin", "admin", new ArrayList<>());
         }
-        return usernamePasswordAuthenticationToken;
+        return new UsernamePasswordAuthenticationToken(
+                "admin", "admin", new ArrayList<>());
     }
 
     @Override
