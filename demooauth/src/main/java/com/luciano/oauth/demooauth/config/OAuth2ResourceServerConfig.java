@@ -42,13 +42,15 @@ public class OAuth2ResourceServerConfig extends
                 .authorizeRequests()
                 .anyRequest()
                 .authenticated()
-                .antMatchers(HttpMethod.GET, "/**").access("#oauth2.hasScope('read')")
-                .antMatchers(HttpMethod.OPTIONS, "/**").access("#oauth2.hasScope('read')")
-                .antMatchers(HttpMethod.POST, "/**").access("#oauth2.hasScope('write')")
-                .antMatchers(HttpMethod.PUT, "/**").access("#oauth2.hasScope('write')")
-                .antMatchers(HttpMethod.PATCH, "/**").access("#oauth2.hasScope('write')")
-                .antMatchers(HttpMethod.DELETE, "/**").access("#oauth2.hasScope('write')");
+                ;
     }
+
+//    .antMatchers(HttpMethod.GET, "/**").access("#oauth2.hasScope('read')")
+//                .antMatchers(HttpMethod.OPTIONS, "/**").access("#oauth2.hasScope('read')")
+//                .antMatchers(HttpMethod.POST, "/**").access("#oauth2.hasScope('write')")
+//                .antMatchers(HttpMethod.PUT, "/**").access("#oauth2.hasScope('write')")
+//                .antMatchers(HttpMethod.PATCH, "/**").access("#oauth2.hasScope('write')")
+//                .antMatchers(HttpMethod.DELETE, "/**").access("#oauth2.hasScope('write')")
 
 //    @Bean
 //    @Primary

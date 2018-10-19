@@ -52,6 +52,13 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
                 .accessTokenConverter(accessTokenConverter());
     }
 
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security
+                .tokenKeyAccess("isAnonymous() || hasRole('ROLE_TRUSTED_CLIENT')") // permitAll()
+                .checkTokenAccess("hasRole('TRUSTED_CLIENT')"); // isAuthenticated()
+    }
+
     @Bean
     public TokenStore tokenStore() {
         return new JwtTokenStore(accessTokenConverter());
@@ -103,8 +110,7 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
                 .authorizedGrantTypes("password", "refresh_token")
                 .accessTokenValiditySeconds(30000)
                 .scopes("read")
-                .authorities("ADMIN")
-                .resourceIds("resources");
+                .authorities("ADMIN");
 
     }
 

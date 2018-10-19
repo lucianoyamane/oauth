@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResour
 import org.springframework.security.oauth2.client.token.AccessTokenRequest;
 import org.springframework.security.oauth2.client.token.DefaultAccessTokenRequest;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
+import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class OauthClientConfig {
     @Bean
     protected OAuth2ProtectedResourceDetails resource() {
 
-        ClientCredentialsResourceDetails resource = new ClientCredentialsResourceDetails();
+        ResourceOwnerPasswordResourceDetails resource = new ResourceOwnerPasswordResourceDetails();
 
         List scopes = new ArrayList<String>(2);
         scopes.add("read");
@@ -30,7 +31,10 @@ public class OauthClientConfig {
         resource.setAccessTokenUri("http://localhost:8500/oauth/token");
         resource.setClientId("password_code_client");
         resource.setClientSecret("password_code_secret");
-        resource.setGrantType("refresh_token");
+        resource.setGrantType("password");
+
+        resource.setUsername("admin");
+        resource.setPassword("admin");
 
 
         return resource;
