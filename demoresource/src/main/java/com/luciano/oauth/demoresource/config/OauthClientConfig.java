@@ -1,8 +1,10 @@
 package com.luciano.oauth.demoresource.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
+import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestOperations;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
@@ -20,31 +22,26 @@ import java.util.List;
 public class OauthClientConfig {
 
     @Bean
-    protected OAuth2ProtectedResourceDetails resource() {
+    protected OAuth2ProtectedResourceDetails resourceClientCredentials() {
 
-        ResourceOwnerPasswordResourceDetails resource = new ResourceOwnerPasswordResourceDetails();
-
-        List scopes = new ArrayList<String>(2);
-        scopes.add("read");
+        ClientCredentialsResourceDetails resource = new ClientCredentialsResourceDetails();
+        List scopes = new ArrayList<String>();
+        scopes.add("all");
         resource.setScope(scopes);
 
         resource.setAccessTokenUri("http://localhost:8500/oauth/token");
-        resource.setClientId("password_code_client");
-        resource.setClientSecret("password_code_secret");
-        resource.setGrantType("password");
-
-        resource.setUsername("admin");
-        resource.setPassword("admin");
+        resource.setClientId("authorization_code_client");
+        resource.setClientSecret("authorization_code_secret");
+        resource.setGrantType("client_credentials");
 
 
         return resource;
     }
 
     @Bean
-    public OAuth2RestOperations restTemplate() {
-        AccessTokenRequest atr = new DefaultAccessTokenRequest();
-
-        return new OAuth2RestTemplate(resource(), new DefaultOAuth2ClientContext(atr));
+    @Qualifier("restTemplateClientCredentials")
+    public OAuth2RestOperations restTemplateClientCredentials(OAuth2ClientContext oauth2ClientContext) {
+        return new OAuth2RestTemplate(resourceClientCredentials(), oauth2ClientContext);
     }
 
 }

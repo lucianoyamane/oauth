@@ -22,13 +22,14 @@ import java.util.Map;
 public class ResourceController {
 
     @Autowired
-    private OAuth2RestOperations restTemplate;
+    @Qualifier("restTemplateClientCredentials")
+    private OAuth2RestOperations restTemplateClientCredentials;
 
     @RequestMapping(value="/find", method = RequestMethod.GET)
-    @PreAuthorize("#oauth2.hasScope('read')")
     public ResponseEntity<String> find(){
         return ResponseEntity.ok().body(new Gson().toJson("SUCESSO!!!"));
     }
+
 
     @PreAuthorize("#oauth2.hasScope('read')")
     @RequestMapping(method = RequestMethod.GET, value = "/users/extra")
@@ -40,10 +41,11 @@ public class ResourceController {
                 .getDecodedDetails();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value="/password")
-    public ResponseEntity<String> password() {
-//        JsonNode teste = restTemplate.getForObject(resourceURI, JsonNode.class);
-        OAuth2AccessToken teste = restTemplate.getAccessToken();
+
+
+    @RequestMapping(method = RequestMethod.GET, value="/client_credentials")
+    public ResponseEntity<String> clientCredentials() {
+        OAuth2AccessToken teste = restTemplateClientCredentials.getAccessToken();
         return ResponseEntity.ok().body(new Gson().toJson(teste));
     }
 

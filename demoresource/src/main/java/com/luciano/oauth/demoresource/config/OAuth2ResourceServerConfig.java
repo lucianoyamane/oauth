@@ -45,7 +45,6 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     public void configure(HttpSecurity http) throws Exception {
         http.requestMatchers()
                 .antMatchers("/**")
-                .and().authorizeRequests().antMatchers(HttpMethod.GET, "/**").access("#oauth2.hasScope('read')")
                 .and().authorizeRequests().anyRequest().authenticated()
                 .and().csrf().disable()
                 .anonymous().disable();
