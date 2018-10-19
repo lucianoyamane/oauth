@@ -31,7 +31,6 @@ public class ClientController {
 
     @RequestMapping(method = RequestMethod.GET, value="/client_credentials")
     public ResponseEntity<String> clientCredentials() {
-//        JsonNode teste = restTemplate.getForObject(resourceURI, JsonNode.class);
         OAuth2AccessToken teste = restTemplateClientCredentials.getAccessToken();
         return ResponseEntity.ok().body(new Gson().toJson(teste));
     }
@@ -39,7 +38,6 @@ public class ClientController {
 
     @RequestMapping(method = RequestMethod.GET, value="/password")
     public ResponseEntity<String> password() {
-//        JsonNode teste = restTemplate.getForObject(resourceURI, JsonNode.class);
         restTemplatePassword.getOAuth2ClientContext().getAccessTokenRequest().set("username", "admin");
         restTemplatePassword.getOAuth2ClientContext().getAccessTokenRequest().set("password", "admin");
         OAuth2AccessToken teste = restTemplatePassword.getAccessToken();
