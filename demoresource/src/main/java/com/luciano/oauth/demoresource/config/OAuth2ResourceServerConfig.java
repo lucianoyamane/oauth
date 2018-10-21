@@ -33,13 +33,6 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     @Autowired
     private CustomAccessTokenConverter customAccessTokenConverter;
 
-    @Autowired
-    private ResourceServerProperties sso;
-
-    @Bean
-    public ResourceServerTokenServices myUserInfoTokenServices() {
-        return new CustomUserInfoTokenServices(sso.getUserInfoUri(), sso.getClientId());
-    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {

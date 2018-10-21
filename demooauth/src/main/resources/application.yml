@@ -1,2 +1,6 @@
 server:
   port: 8501
+
+security:
+  basic:
+    enabled: false

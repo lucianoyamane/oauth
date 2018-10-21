@@ -1,6 +1,10 @@
 server:
   port: 8500
 
+security:
+  basic:
+    enabled: false
+
 zuul:
   prefix: /gateway
   routes:

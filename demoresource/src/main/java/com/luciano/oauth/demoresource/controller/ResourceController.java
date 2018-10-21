@@ -22,10 +22,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping(value = "/resources", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ResourceController {
 
-    @Autowired
-    @Qualifier("restTemplateClientCredentials")
-    private OAuth2RestOperations restTemplateClientCredentials;
-
     @RequestMapping(value="/find", method = RequestMethod.GET)
     @PreAuthorize("#oauth2.hasScope('all')")
     public ResponseEntity<String> find(){
@@ -56,12 +52,5 @@ public class ResourceController {
                 .getDecodedDetails();
     }
 
-
-
-    @RequestMapping(method = RequestMethod.GET, value="/client_credentials")
-    public ResponseEntity<String> clientCredentials() {
-        OAuth2AccessToken teste = restTemplateClientCredentials.getAccessToken();
-        return ResponseEntity.ok().body(new Gson().toJson(teste));
-    }
 
 }
