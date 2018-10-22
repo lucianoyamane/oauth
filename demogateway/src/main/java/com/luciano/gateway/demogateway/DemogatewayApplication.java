@@ -2,9 +2,10 @@ package com.luciano.gateway.demogateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
-@SpringBootApplication
+@SpringBootApplication(exclude= {UserDetailsServiceAutoConfiguration.class})
 @EnableZuulProxy
 public class DemogatewayApplication {
 
