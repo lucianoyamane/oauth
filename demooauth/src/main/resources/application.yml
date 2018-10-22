@@ -1,5 +1,7 @@
 server:
   port: 8501
+  servlet:
+    context-path: /autenticacao
 
 security:
   basic:

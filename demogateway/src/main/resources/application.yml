@@ -10,9 +10,9 @@ zuul:
   routes:
     autenticacao:
       sensitiveHeaders: Cookie,Set-Cookie
-      url: http://localhost:8501/oauth/token
+      url: http://localhost:8501/autenticacao/oauth/token
 
     recurso:
       sensitiveHeaders: Cookie,Set-Cookie
       path: /recursos/**
-      url: http://localhost:8502/resources
+      url: http://localhost:8502/recurso/resources

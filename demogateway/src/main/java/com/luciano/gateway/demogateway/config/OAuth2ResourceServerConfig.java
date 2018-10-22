@@ -47,13 +47,14 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         Resource resource = new ClassPathResource("public.txt");
-        String publicKey = null;
+
         try {
-            publicKey = IOUtils.toString(resource.getInputStream());
+            String publicKey = IOUtils.toString(resource.getInputStream());
+            converter.setVerifierKey(publicKey);
         } catch (final IOException e) {
             throw new RuntimeException(e);
         }
-        converter.setVerifierKey(publicKey);
+
         converter.setAccessTokenConverter(customAccessTokenConverter);
         return converter;
     }
