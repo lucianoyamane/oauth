@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -29,22 +28,12 @@ import java.io.IOException;
 public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
-    private PasswordEncoder encoder;
-
-    @Autowired
     @Qualifier("dataSource")
     private DataSource dataSource;
 
-    //grand_type=password
-    @Autowired
-    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;
-
-
-    //grand_type=password
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints){
-        endpoints.authenticationManager(this.authenticationManager)
+        endpoints
                 .tokenStore(tokenStore())
                 .accessTokenConverter(accessTokenConverter());
     }
@@ -80,19 +69,10 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
         defaultTokenServices.setSupportRefreshToken(true);
         return defaultTokenServices;
     }
-    //$2a$10$8EAEOhp9Qk7ZvxigHJCIbewrVNe1XV/YCB24YJoBS9DmGgNRnmaiS
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.jdbc(dataSource);
-        //        clients
-//                .inMemory()
-//                .withClient("authorization_code_client")
-//                .secret(encoder.encode("authorization_code_secret"))
-//                .authorizedGrantTypes("client_credentials")
-//                .accessTokenValiditySeconds(300)
-//                .scopes("all");
-
     }
 
     @Bean

@@ -3,10 +3,6 @@ server:
   servlet:
     context-path: /autenticacao
 
-security:
-  basic:
-    enabled: false
-
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/oauth
