@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 
 @Configuration
@@ -29,6 +30,10 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    @Qualifier("dataSource")
+    private DataSource dataSource;
 
     //grand_type=password
     @Autowired
@@ -75,16 +80,18 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
         defaultTokenServices.setSupportRefreshToken(true);
         return defaultTokenServices;
     }
+    //$2a$10$8EAEOhp9Qk7ZvxigHJCIbewrVNe1XV/YCB24YJoBS9DmGgNRnmaiS
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients
-                .inMemory()
-                .withClient("authorization_code_client")
-                .secret(encoder.encode("authorization_code_secret"))
-                .authorizedGrantTypes("client_credentials")
-                .accessTokenValiditySeconds(300)
-                .scopes("all");
+        clients.jdbc(dataSource);
+        //        clients
+//                .inMemory()
+//                .withClient("authorization_code_client")
+//                .secret(encoder.encode("authorization_code_secret"))
+//                .authorizedGrantTypes("client_credentials")
+//                .accessTokenValiditySeconds(300)
+//                .scopes("all");
 
     }
 
