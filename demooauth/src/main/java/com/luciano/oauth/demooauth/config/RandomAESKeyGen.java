@@ -1,5 +1,8 @@
 package com.luciano.oauth.demooauth.config;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.xml.bind.DatatypeConverter;
@@ -26,6 +29,13 @@ public class RandomAESKeyGen {
     }
 
     public static void main(String[] args) {
+
+        String password = "authorization_code_secret";
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(password);
+        System.out.print(encodedPassword);
+
+
         String key = null;
         for(int i=0; i< 5; ++i) {
             try {
