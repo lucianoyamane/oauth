@@ -1,14 +1,13 @@
 server:
-  port: 8503
+  port: 8505
 
 eureka:
   instance:
     hostname: localhost
-    port: 8505
   client:
     registerWithEureka: true
     fetchRegistry: false
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
     wait-time-in-ms-when-sync-empty: 3000

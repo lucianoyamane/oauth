@@ -3,6 +3,18 @@ server:
   servlet:
     context-path: /autenticacao
 
+eureka:
+  instance:
+    hostname: localhost
+    port: 8505
+  client:
+    registerWithEureka: true
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+  server:
+    wait-time-in-ms-when-sync-empty: 3000
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/oauth

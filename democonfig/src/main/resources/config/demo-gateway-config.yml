@@ -1,6 +1,18 @@
 server:
   port: 8500
 
+eureka:
+  instance:
+    hostname: localhost
+    port: 8505
+  client:
+    registerWithEureka: true
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+  server:
+    wait-time-in-ms-when-sync-empty: 3000
+
 zuul:
   prefix: /gateway
   routes:
