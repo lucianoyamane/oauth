@@ -49,14 +49,6 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("mytest.jks"), "mypass".toCharArray());
         converter.setKeyPair(keyStoreKeyFactory.getKeyPair("mytest"));
-        Resource resource = new ClassPathResource("public.txt");
-        String publicKey = null;
-        try {
-            publicKey = IOUtils.toString(resource.getInputStream());
-        } catch (final IOException e) {
-            throw new RuntimeException(e);
-        }
-        converter.setVerifierKey(publicKey);
 
         return converter;
     }
@@ -66,7 +58,6 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
     public DefaultTokenServices tokenServices() {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenStore(tokenStore());
-        defaultTokenServices.setSupportRefreshToken(true);
         return defaultTokenServices;
     }
 

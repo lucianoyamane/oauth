@@ -6,8 +6,8 @@ server:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/oauth
-    username: springoauth
-    password: springoauth
+    username: springaouth
+    password: springaouth
   jpa:
     database: POSTGRESQL
     datasource:
