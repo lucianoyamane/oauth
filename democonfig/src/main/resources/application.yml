@@ -1,0 +1,11 @@
+server:
+  port: 8504
+
+spring:
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: classpath:/config

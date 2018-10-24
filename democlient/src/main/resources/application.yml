@@ -1,6 +1,0 @@
-server:
-  port: 8503
-
-security:
-    basic:
-        enabled: false
