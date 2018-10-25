@@ -22,6 +22,9 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.io.InputStream;
+import java.security.*;
+import java.security.cert.CertificateException;
 
 @Configuration
 @EnableAuthorizationServer
@@ -30,6 +33,9 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
     @Autowired
     @Qualifier("dataSource")
     private DataSource dataSource;
+
+    @Autowired
+    private KeyConfiguration keyConfiguration;
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints){
@@ -44,12 +50,29 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
         return new JwtTokenStore(accessTokenConverter());
     }
 
+//    @Bean
+//    public JwtAccessTokenConverter accessTokenConverter() {
+//        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+//        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("mytest.jks"), "mypass".toCharArray());
+//        converter.setKeyPair(keyStoreKeyFactory.getKeyPair("mytest"));
+//
+//        return converter;
+//    }
+
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("mytest.jks"), "mypass".toCharArray());
-        converter.setKeyPair(keyStoreKeyFactory.getKeyPair("mytest"));
 
+//        InputStream stream = new ClassPathResource("demo.keystore").getInputStream();
+//        KeyStore store = KeyStore.getInstance("JKS");
+//
+//        store.load(stream, "demo.keystore".toCharArray());
+//        PrivateKey privateKey = (PrivateKey)store.getKey("demo_key", "demo.keystore".toCharArray());
+//
+//        PublicKey publicKey = getKeyFromConfigServer(keyUriRestTemplate);
+
+        KeyPair keyPair = new KeyPair(keyConfiguration.getPublic(), keyConfiguration.getPrivate());
+        converter.setKeyPair(keyPair);
         return converter;
     }
 

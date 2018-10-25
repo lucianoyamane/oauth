@@ -2,6 +2,12 @@ server:
   port: 8501
   servlet:
     context-path: /autenticacao
+  ssl:
+    enabled: false
+    key-alias: demo_rsa_key
+    key-store: classpath:demo_rsa_key.keystore
+    key-store-password: demo_rsa_key
+    key-password: demo_rsa_key
 
 eureka:
   instance:
@@ -18,8 +24,8 @@ eureka:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/oauth
-    username: springaouth
-    password: springaouth
+    username: springoauth
+    password: springoauth
   jpa:
     database: POSTGRESQL
     datasource:
